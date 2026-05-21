@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resumen Teórico · Macroeconomía I · 2do Parcial</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1208;
+    --paper: #faf7f0;
+    --paper2: #f3ede0;
+    --accent: #b5400a;
+    --accent2: #2b5c8a;
+    --accent3: #3a7a4a;
+    --gold: #c8922a;
+    --muted: #6b5e4a;
+    --border: #d6c9b0;
+    --formula-bg: #eee9de;
+    --vf-v: #e8f5e9;
+    --vf-f: #fdecea;
+    --vf-v-border: #3a7a4a;
+    --vf-f-border: #b5400a;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--paper); color: var(--ink); font-family: 'Source Serif 4', Georgia, serif; font-size: 16.5px; line-height: 1.75; }
+
+  /* NAV */
+  nav { position: sticky; top: 0; z-index: 100; background: var(--ink); padding: 0 2rem; display: flex; align-items: center; overflow-x: auto; border-bottom: 3px solid var(--accent); scrollbar-width: none; }
+  nav::-webkit-scrollbar { display: none; }
+  nav a { color: #c9bfa8; font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; text-decoration: none; padding: 0.8rem 0.9rem; white-space: nowrap; transition: color .2s, background .2s; letter-spacing: .03em; border-right: 1px solid #333; }
+  nav a:hover { color: var(--gold); background: #2a2010; }
+  nav .brand { font-family: 'Playfair Display', serif; font-size: 0.85rem; font-weight: 700; color: var(--gold); padding-right: 1.2rem; border-right: 1px solid #555; margin-right: .3rem; white-space: nowrap; flex-shrink: 0; }
+
+  /* HEADER */
+  header { background: var(--ink); color: var(--paper); padding: 4.5rem 3rem 3.5rem; position: relative; overflow: hidden; }
+  header::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(-45deg, transparent, transparent 40px, rgba(200,146,42,0.04) 40px, rgba(200,146,42,0.04) 41px); }
+  header .tag { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; letter-spacing: .18em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; }
+  header h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.2rem, 5vw, 4rem); font-weight: 900; line-height: 1.05; max-width: 780px; margin-bottom: 1rem; }
+  header p { color: #c9bfa8; font-size: 0.98rem; max-width: 600px; font-style: italic; }
+  header .pills { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1.8rem; }
+  header .pills span { background: rgba(200,146,42,0.13); border: 1px solid rgba(200,146,42,0.28); color: var(--gold); font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; padding: .3rem .75rem; letter-spacing: .06em; }
+
+  /* LAYOUT */
+  .container { max-width: 880px; margin: 0 auto; padding: 0 2rem; }
+
+  /* SECTIONS */
+  section { padding: 4rem 0 2.5rem; border-bottom: 1px solid var(--border); opacity: 0; transform: translateY(18px); transition: opacity .5s ease, transform .5s ease; }
+  section.visible { opacity: 1; transform: none; }
+  section:last-of-type { border-bottom: none; }
+
+  .sec-header { display: flex; align-items: baseline; gap: 1.1rem; margin-bottom: 2rem; }
+  .sec-num { font-family: 'Playfair Display', serif; font-size: 3rem; font-weight: 900; color: var(--border); line-height: 1; flex-shrink: 0; }
+  .sec-title h2 { font-family: 'Playfair Display', serif; font-size: 1.7rem; font-weight: 700; line-height: 1.2; }
+  .sec-title .sub { font-family: 'JetBrains Mono', monospace; font-size: 0.67rem; color: var(--muted); letter-spacing: .1em; text-transform: uppercase; margin-top: .2rem; }
+
+  .rule { height: 3px; width: 50px; margin-bottom: 1.8rem; }
+  .r-red { background: var(--accent); } .r-blue { background: var(--accent2); } .r-green { background: var(--accent3); } .r-gold { background: var(--gold); }
+
+  p { margin-bottom: 1rem; }
+  p:last-child { margin-bottom: 0; }
+  h3 { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700; margin: 2rem 0 .8rem; }
+
+  /* FORMULA */
+  .formula { background: var(--formula-bg); border-left: 4px solid var(--accent); padding: 1.1rem 1.4rem; margin: 1.4rem 0; font-family: 'JetBrains Mono', monospace; font-size: 0.88rem; line-height: 1.9; border-radius: 0 5px 5px 0; overflow-x: auto; }
+  .formula .lbl { font-size: 0.67rem; text-transform: uppercase; letter-spacing: .1em; color: var(--accent); margin-bottom: .35rem; font-weight: 600; }
+  .formula.blue { border-left-color: var(--accent2); }
+  .formula.blue .lbl { color: var(--accent2); }
+
+  /* CARDS */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.3rem 0; }
+  @media (max-width: 600px) { .grid-2 { grid-template-columns: 1fr; } }
+  .card { background: var(--paper2); border: 1px solid var(--border); padding: 1.2rem 1.3rem; border-radius: 4px; }
+  .card h4 { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; margin-bottom: .5rem; }
+  .card p { font-size: 0.9rem; color: #3a3020; line-height: 1.62; }
+  .card.c-red { border-top: 3px solid var(--accent); } .card.c-blue { border-top: 3px solid var(--accent2); } .card.c-green { border-top: 3px solid var(--accent3); } .card.c-gold { border-top: 3px solid var(--gold); }
+
+  /* CALLOUT */
+  .callout { border: 1px solid var(--border); border-left: 5px solid var(--accent2); background: #f0f5fa; padding: 1.1rem 1.4rem; margin: 1.3rem 0; border-radius: 0 5px 5px 0; font-size: 0.93rem; }
+  .callout strong { color: var(--accent2); }
+  .callout.green { border-left-color: var(--accent3); background: #f0f7f1; }
+  .callout.green strong { color: var(--accent3); }
+  .callout.gold { border-left-color: var(--gold); background: #fdf8ee; }
+  .callout.gold strong { color: #a07010; }
+  .callout.red { border-left-color: var(--accent); background: #fdf2ee; }
+  .callout.red strong { color: var(--accent); }
+
+  /* COMPARE */
+  .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid var(--border); border-radius: 5px; overflow: hidden; margin: 1.3rem 0; }
+  .compare-col { padding: 1.3rem; }
+  .compare-col:first-child { border-right: 1px solid var(--border); }
+  .compare-col h4 { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; letter-spacing: .08em; text-transform: uppercase; margin-bottom: .9rem; padding-bottom: .4rem; border-bottom: 2px solid; }
+  .compare-col:first-child h4 { color: var(--accent); border-color: var(--accent); }
+  .compare-col:last-child h4 { color: var(--accent2); border-color: var(--accent2); }
+  .compare-col ul { list-style: none; padding: 0; }
+  .compare-col ul li { padding: .35rem 0; font-size: 0.88rem; border-bottom: 1px dashed var(--border); line-height: 1.5; }
+  .compare-col ul li:last-child { border-bottom: none; }
+  @media (max-width: 540px) { .compare { grid-template-columns: 1fr; } }
+
+  /* TIMELINE */
+  .timeline { position: relative; padding-left: 1.8rem; margin: 1.3rem 0; }
+  .timeline::before { content: ''; position: absolute; left: 6px; top: 0; bottom: 0; width: 2px; background: var(--border); }
+  .tl-item { position: relative; margin-bottom: 1.3rem; padding-left: 1rem; }
+  .tl-item::before { content: ''; position: absolute; left: -1.5rem; top: .5rem; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); border: 2px solid var(--paper); box-shadow: 0 0 0 2px var(--accent); }
+  .tl-item h4 { font-family: 'Playfair Display', serif; font-weight: 700; font-size: .98rem; margin-bottom: .25rem; }
+  .tl-item p { font-size: 0.88rem; color: #3a3020; margin-bottom: 0; }
+
+  /* TABLE */
+  table { width: 100%; border-collapse: collapse; margin: 1.3rem 0; font-size: 0.89rem; }
+  th { background: var(--ink); color: var(--paper); font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; letter-spacing: .07em; text-transform: uppercase; padding: .65rem .9rem; text-align: left; }
+  td { padding: .65rem .9rem; border-bottom: 1px solid var(--border); vertical-align: top; line-height: 1.55; }
+  tr:nth-child(even) td { background: var(--paper2); }
+
+  /* LIST */
+  ul.styled { margin: .9rem 0; padding: 0; list-style: none; }
+  ul.styled li { padding: .4rem 0 .4rem 1.5rem; position: relative; border-bottom: 1px dashed var(--border); font-size: 0.91rem; }
+  ul.styled li:last-child { border-bottom: none; }
+  ul.styled li::before { content: '→'; position: absolute; left: 0; color: var(--accent); font-family: monospace; }
+
+  /* ── PARCIAL CARDS (V/F boxes) ── */
+  .exam-block { margin: 2rem 0; }
+  .exam-block h3 { font-size: 1rem; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); margin-bottom: 1rem; }
+  .vf-item { border: 1px solid var(--border); border-radius: 5px; overflow: hidden; margin-bottom: .8rem; }
+  .vf-header { display: flex; align-items: flex-start; gap: .9rem; padding: .9rem 1.1rem; cursor: pointer; user-select: none; }
+  .vf-badge { flex-shrink: 0; font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; font-weight: 600; padding: .2rem .55rem; border-radius: 3px; margin-top: .2rem; }
+  .badge-v { background: var(--vf-v); color: var(--vf-v-border); border: 1px solid var(--vf-v-border); }
+  .badge-f { background: var(--vf-f); color: var(--vf-f-border); border: 1px solid var(--vf-f-border); }
+  .vf-question { font-size: 0.92rem; flex: 1; line-height: 1.6; }
+  .vf-body { padding: 0 1.1rem 1rem 1.1rem; border-top: 1px solid var(--border); background: var(--paper2); font-size: 0.88rem; line-height: 1.7; display: none; }
+  .vf-item.open .vf-body { display: block; }
+  .vf-body p { margin-top: .7rem; }
+  .vf-chevron { flex-shrink: 0; font-size: .75rem; color: var(--muted); margin-left: auto; padding-top: .3rem; transition: transform .2s; }
+  .vf-item.open .vf-chevron { transform: rotate(180deg); }
+
+  /* STEP BOX */
+  .steps { counter-reset: step; margin: 1.2rem 0; }
+  .step { display: flex; gap: 1rem; margin-bottom: .9rem; align-items: flex-start; }
+  .step-n { flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%; background: var(--accent); color: white; font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; font-weight: 600; display: flex; align-items: center; justify-content: center; margin-top: .25rem; }
+  .step-n.blue { background: var(--accent2); }
+  .step-n.green { background: var(--accent3); }
+  .step p { margin: 0; font-size: 0.9rem; line-height: 1.6; }
+
+  /* REGIME GRID */
+  .regime-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); margin: 1.3rem 0; border-radius: 5px; overflow: hidden; }
+  .regime-cell { background: var(--paper); padding: .9rem 1rem; }
+  .regime-cell.hdr { background: var(--ink); color: var(--paper); font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; letter-spacing: .07em; text-transform: uppercase; }
+  .regime-cell h5 { font-size: 0.84rem; font-weight: 600; margin-bottom: .25rem; }
+  .regime-cell p { font-size: 0.8rem; color: var(--muted); margin: 0; line-height: 1.5; }
+  @media (max-width: 580px) { .regime-grid { grid-template-columns: 1fr; } }
+
+  /* ALERT (trap) */
+  .trap { background: #fff8e1; border: 1px solid #f9a825; border-left: 5px solid #f9a825; padding: 1rem 1.2rem; margin: 1.2rem 0; border-radius: 0 5px 5px 0; font-size: 0.9rem; }
+  .trap .trap-label { font-family: 'JetBrains Mono', monospace; font-size: 0.67rem; text-transform: uppercase; letter-spacing: .1em; color: #7a5e00; margin-bottom: .3rem; font-weight: 600; }
+
+  footer { background: var(--ink); color: #6b5e4a; padding: 2rem 3rem; font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; text-align: center; letter-spacing: .04em; }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="brand">Macro I · 2do P</span>
+  <a href="#wsps">WS-PS</a>
+  <a href="#oada">OA-DA</a>
+  <a href="#phillips">Phillips</a>
+  <a href="#abierta">Eco. Abierta</a>
+  <a href="#tcfijo">TC Fijo</a>
+  <a href="#tcflexible">TC Flexible</a>
+  <a href="#inflacion">Inflación ARG</a>
+  <a href="#parcial">🎯 Parciales</a>
+</nav>
+
+<header>
+  <div class="tag">Macroeconomía I · Cátedra Damill · UBA · 2do Parcial 2025</div>
+  <h1>Resumen Teórico Completo + Ejercicios de Parciales</h1>
+  <p>Modelos, mecanismos paso a paso, trampas frecuentes y resolución de preguntas de parciales anteriores.</p>
+  <div class="pills">
+    <span>WS-PS</span><span>OA-DA</span><span>Curva de Phillips</span><span>NAIRU</span>
+    <span>Mundell-Fleming</span><span>TC Fijo</span><span>TC Flexible</span>
+    <span>UIP</span><span>Marshall-Lerner</span><span>Estructuralismo</span><span>Alta Inflación</span>
+  </div>
+</header>
+
+<!-- ══════════════ 01 WS-PS ══════════════ -->
+<section id="wsps">
+<div class="container">
+  <div class="sec-header">
+    <div class="sec-num">01</div>
+    <div class="sec-title"><h2>Modelo WS-PS y Mercado de Trabajo</h2><div class="sub">Wage Setting – Price Setting · Mediano Plazo</div></div>
+  </div>
+  <div class="rule r-red"></div>
+
+  <p>El modelo <strong>WS-PS</strong> describe el mercado de trabajo en el <em>mediano plazo</em> con capital fijo y capacidad ociosa. A diferencia del modelo clásico walrasiano, el salario real no surge del vaciado instantáneo del mercado, sino de la <strong>negociación salarial</strong> (WS) y la <strong>fijación de precios con mark-up</strong> (PS).</p>
+
+  <div class="grid-2">
+    <div class="card c-red">
+      <h4>Curva WS — Wage Setting</h4>
+      <p>Refleja el poder de negociación de los trabajadores. A <strong>menor desempleo → mayor salario real exigido</strong>. Pendiente negativa en (u, W/P).</p>
+    </div>
+    <div class="card c-blue">
+      <h4>Curva PS — Price Setting</h4>
+      <p>Los precios son un mark-up μ sobre los costos salariales. El salario real "tolerado" por las firmas es <strong>W/P = 1/(1+μ)</strong>. Horizontal en (u, W/P).</p>
+    </div>
+  </div>
+
+  <div class="formula">
+    <div class="lbl">Ecuaciones del modelo WS-PS</div>
+    WS<sub>CP</sub> :  W<sub>t</sub> = P<sup>e</sup><sub>t</sub> · f(u<sub>t</sub>, z)     donde f'(u) &lt; 0, f'(z) &gt; 0<br>
+    WS<sub>MP</sub> :  W/P = f(u, z)              solo válida cuando P = P<sup>e</sup><br><br>
+    PS    :  P = (1+μ)·W    ⟹    W/P = 1/(1+μ)<br><br>
+    Equilibrio MP :  f(u<sub>E</sub>, z) = 1/(1+μ)    →  determina u<sub>E</sub> y (W/P)<sub>E</sub>
+  </div>
+
+  <div class="trap">
+    <div class="trap-label">⚠ Trampa frecuente en parciales</div>
+    La pregunta "si bajan los salarios reales, ¿baja el desempleo?" mezcla causalidades. En el modelo WS-PS la relación es al <strong>revés</strong>: es el nivel de desempleo el que <em>determina</em> el salario real negociado (a más desempleo → menos poder de negociación → menores salarios). No es que bajando salarios se genere más empleo automáticamente.
+  </div>
+
+  <h3>Parámetros clave y sus efectos</h3>
+  <table>
+    <thead><tr><th>Parámetro</th><th>Qué captura</th><th>Si ↑, desplaza</th><th>Efecto sobre u<sub>E</sub></th></tr></thead>
+    <tbody>
+      <tr><td><strong>μ (mark-up)</strong></td><td>Poder de mercado de las firmas</td><td>PS hacia abajo → ↓ W/P<sub>PS</sub></td><td>↑ u<sub>E</sub></td></tr>
+      <tr><td><strong>z (factores institucionales)</strong></td><td>Subsidio desempleo, sindicatos, regulaciones</td><td>WS hacia arriba → ↑ W/P<sub>WS</sub></td><td>↑ u<sub>E</sub></td></tr>
+      <tr><td><strong>P<sup>e</sup> (precios esperados)</strong></td><td>Expectativas al momento de negociar</td><td>OA en el espacio (P,Y)</td><td>No afecta u<sub>E</sub></td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout">
+    <strong>Tiempo lógico vs. histórico (Salvatore, Nota de Cátedra Nº4):</strong> La curva WS<sub>MP</sub> solo existe en el tiempo lógico donde P = P<sup>e</sup>. En el corto plazo (tiempo histórico), los agentes forman expectativas con previsión imperfecta: los errores no son sistemáticos pero sí persisten. Esto genera el vínculo entre corto y mediano plazo que Blanchard deja implícito.
+  </div>
+
+  <h3>WS-PS vs. Modelo Clásico</h3>
+  <div class="compare">
+    <div class="compare-col"><h4>Modelo Clásico</h4>
+      <ul>
+        <li>Mercado vacía instantáneamente</li>
+        <li>Desempleo = solo voluntario</li>
+        <li>W/P = Productividad marginal del trabajo</li>
+        <li>No hay desempleo estructural</li>
+        <li>"Pleno empleo" ↔ u = 0</li>
+        <li>Bajar salarios reales reduce desempleo</li>
+      </ul>
+    </div>
+    <div class="compare-col"><h4>WS-PS (no walrasiano)</h4>
+      <ul>
+        <li>Negociación + poder de mercado</li>
+        <li>Desempleo estructural u<sub>E</sub> > 0</li>
+        <li>W/P surge de la puja distributiva</li>
+        <li>El desempleo puede persistir</li>
+        <li>"Pleno empleo" ↔ u = u<sub>E</sub></li>
+        <li>↑u → ↓W/P, no al revés</li>
+      </ul>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ══════════════ 02 OA-DA ══════════════ -->
+<section id="oada">
+<div class="container">
+  <div class="sec-header">
+    <div class="sec-num">02</div>
+    <div class="sec-title"><h2>Modelo OA-DA</h2><div class="sub">Corto y Mediano Plazo · Espacio (P, Y)</div></div>
+  </div>
+  <div class="rule r-blue"></div>
+
+  <p>El modelo OA-DA combina la porción <strong>walrasiana</strong> (IS-LM → curva DA) con la porción <strong>no-walrasiana</strong> (WS-PS → curva OA) para analizar el equilibrio simultáneo en (P, Y). El dinero <strong>no es neutral en el corto plazo</strong>, pero sí lo es en el mediano/largo plazo.</p>
+
+  <div class="grid-2">
+    <div class="card c-blue">
+      <h4>Demanda Agregada (DA)</h4>
+      <p>Derivada del IS-LM: ↑P → ↓M/P → ↑i → ↓I → ↓Y. Pendiente <strong>negativa</strong> en (P,Y). Se desplaza con política fiscal o monetaria.</p>
+    </div>
+    <div class="card c-red">
+      <h4>Oferta Agregada CP (OA<sub>CP</sub>)</h4>
+      <p>Con salarios fijados, ↑Y → ↓u → ↑W nominal → ↑P para recuperar mark-up. Pendiente <strong>positiva</strong> en (P,Y). Se desplaza cuando cambia P<sup>e</sup>.</p>
+    </div>
+  </div>
+
+  <div class="formula">
+    <div class="lbl">Relaciones OA y DA</div>
+    DA: todo par (P,Y) tal que  dY/dt = di/dt = 0   (IS-LM en equilibrio)<br><br>
+    OA<sub>CP</sub>: P = P<sup>e</sup> · (1+μ) · f(Y/N, z)   →   todo par (P,Y) con  dW/dt = dP/dt = 0<br><br>
+    OA<sub>MP</sub>: P = P<sup>e</sup>   (cuando u = u<sub>E</sub> y P = P<sup>e</sup>)   →   vertical en Y<sub>E</sub>
+  </div>
+
+  <h3>Mecanismo de ajuste ante un shock de DA expansivo (paso a paso)</h3>
+
+  <div class="steps">
+    <div class="step"><div class="step-n">A</div><p><strong>Punto de partida:</strong> Y = Y<sub>E</sub>, u = u<sub>E</sub>, P = P<sup>e</sup>. Equilibrio de mediano plazo. IS, LM y OA<sub>CP</sub> se intersectan en el mismo punto.</p></div>
+    <div class="step"><div class="step-n">B</div><p><strong>Shock expansivo (ej. ↑G):</strong> IS se desplaza a la derecha → ↑Y, ↑i. Nuevo equilibrio IS-LM en B. Y > Y<sub>E</sub> → u < u<sub>E</sub>. Los salarios <strong>nominales</strong> suben por mayor poder de negociación. Los precios aún no se ajustan → <strong>salario real sube</strong>, mark-up cae. <em>En CP: ↑W/P y ↑P</em>.</p></div>
+    <div class="step"><div class="step-n">C</div><p><strong>Sorpresa inflacionaria:</strong> P<sub>t</sub> > P<sup>e</sup><sub>t</sub>. Efecto saldos reales: ↓M/P → LM se desplaza a la izquierda → ↑i → ↓Y. Economía en punto C sobre la curva DA (movimiento sobre DA, no desplazamiento). Y<sub>C</sub> > Y<sub>E</sub> aún.</p></div>
+    <div class="step"><div class="step-n">D</div><p><strong>Ajuste de expectativas (mediano plazo):</strong> Los agentes corrigen ↑P<sup>e</sup> → negocian salarios nominales más altos → OA<sub>CP</sub> se desplaza hacia arriba/izquierda. P sube más, Y cae. Este proceso continúa hasta P = P<sup>e</sup> nuevamente.</p></div>
+    <div class="step"><div class="step-n">E</div><p><strong>Nuevo equilibrio MP:</strong> Y vuelve a Y<sub>E</sub>, u = u<sub>E</sub>, pero con un nivel de precios <em>permanentemente más alto</em>. La política de demanda solo generó inflación. <strong>Neutralidad del dinero en el MP confirmada.</strong></p></div>
+  </div>
+
+  <div class="callout red">
+    <strong>¿Qué pasa con W/P en el mediano plazo?</strong> En el nuevo equilibrio de MP, W/P <em>vuelve a su nivel original</em> (= 1/(1+μ)). El salario real no cambia de forma permanente. Por eso la política de demanda expansiva no puede elevar estructuralmente el salario real.
+  </div>
+
+  <div class="trap">
+    <div class="trap-label">⚠ Pregunta trampa de parciales (2do C 2024)</div>
+    <em>"Inicialmente, en el corto plazo, aumentan los salarios nominales y los precios, permaneciendo constantes los salarios reales."</em> → <strong>FALSO.</strong> En el CP los precios aún no subieron; lo que sube primero es el salario <em>nominal</em>, por lo que el salario <em>real</em> también sube transitoriamente. El mark-up cae. Recién después los empresarios ajustan precios para recuperar el margen, y el salario real baja de vuelta.
+  </div>
+
+  <h3>¿Cuándo el dinero NO es neutral?</h3>
+  <div class="callout green">
+    <strong>Corto plazo:</strong> sí hay efectos reales porque precios y salarios son rígidos y los agentes no anticipan perfectamente la inflación. Una política monetaria expansiva puede aumentar Y y reducir u temporalmente. <br><br>
+    <strong>Mediano/largo plazo:</strong> las expectativas se ajustan (P = P<sup>e</sup>), los salarios nominales suben y el producto vuelve a Y<sub>E</sub>. El dinero es <em>neutral solo en el MP</em>.
+  </div>
+</div>
+</section>
+
+<!-- ══════════════ 03 PHILLIPS ══════════════ -->
+<section id="phillips">
+<div class="container">
+  <div class="sec-header">
+    <div class="sec-num">03</div>
+    <div class="sec-title"><h2>Curva de Phillips</h2><div class="sub">Inflación · Desempleo · Expectativas · NAIRU</div></div>
+  </div>
+  <div class="rule r-green"></div>
+
+  <div class="timeline">
+    <div class="tl-item"><h4>Phillips (1958) — Trade-off empírico</h4>
+      <p>Observación para Inglaterra 1861–1957: a menor u → mayor tasa de variación de salarios nominales (≈ inflación). Relación negativa <em>estable</em>. Samuelson y Solow la verificaron para EE.UU. Sin expectativas. Funcionó mientras π<sup>e</sup> ≈ 0.</p></div>
+    <div class="tl-item"><h4>Friedman-Phelps (1968) — Tasa natural y expectativas</h4>
+      <p>Introducen P<sup>e</sup> y la tasa natural u<sub>N</sub>. El trade-off solo persiste si hay <em>sorpresa inflacionaria</em> (P > P<sup>e</sup>). En el LP, la curva es <strong>vertical</strong> en u<sub>N</sub>. Mantener u &lt; u<sub>N</sub> requiere inflación creciente (para seguir "sorprendiendo").</p></div>
+    <div class="tl-item"><h4>Crisis de los '70 — Estanflación</h4>
+      <p>Shocks petroleros generaron simultáneamente ↑π y ↑u (estanflación). El trade-off desapareció. La curva de Phillips original se vuelve inestable. Esto invalida el uso de la versión simple para policy.</p></div>
+    <div class="tl-item"><h4>NAIRU con WS-PS — Versión moderna</h4>
+      <p>La NAIRU (Non-Accelerating Inflation Rate of Unemployment) depende de variables estructurales (μ, z). No es fija. La inflación depende de π<sup>e</sup> y del poder de negociación relativo.</p></div>
+  </div>
+
+  <div class="formula">
+    <div class="lbl">Curva de Phillips aumentada por expectativas (enfoque WS-PS)</div>
+    π<sub>t</sub>  =  π<sup>e</sup><sub>t</sub>  −  α(u<sub>t</sub> − u<sub>N</sub>)<br><br>
+    Si π<sup>e</sup><sub>t</sub> ≈ π<sub>t-1</sub>  (expectativas adaptativas):<br>
+    π<sub>t</sub> − π<sub>t-1</sub>  ≈  μ − α · u<sub>t</sub>      →      Δπ ≈ μ − α · u<sub>t</sub><br><br>
+    NAIRU:    u<sub>NAIRU</sub> = μ/α       (nivel donde Δπ = 0)<br><br>
+    Si u<sub>t</sub> &lt; u<sub>NAIRU</sub>  →  Δπ &gt; 0  →  inflación se acelera<br>
+    Si u<sub>t</sub> &gt; u<sub>NAIRU</sub>  →  Δπ &lt; 0  →  inflación se desacelera
+  </div>
+
+  <div class="trap">
+    <div class="trap-label">⚠ Punto clave del parcial (1C 2025, afirmación 6)</div>
+    <em>"La curva de Phillips original es una relación negativa entre tasa de desempleo y tasa de inflación."</em> → <strong>VERDADERO</strong>, pero se quiebra en los '70 cuando con la estanflación coexisten alta inflación y alto desempleo, lo que contradice ese trade-off estable.
+  </div>
+
+  <div class="grid-2">
+    <div class="card c-red">
+      <h4>Versión neoclásica (Friedman-Phelps)</h4>
+      <p>Mercado de trabajo neoclásico. La tasa natural = desempleo voluntario. Solo hay empleo extra si se "engaña" a los trabajadores con inflación mayor a la esperada. No sostenible en LP.</p>
+    </div>
+    <div class="card c-gold">
+      <h4>Versión WS-PS (NAIRU)</h4>
+      <p>No hay "engaño": la inflación depende del poder de negociación relativo. La NAIRU varía con μ y z (histéresis posible). Más adecuado para economías con conflicto distributivo.</p>
+    </div>
+  </div>
+
+  <h3>Metas de inflación — Implicancias (Abeles y Borzel, 2004)</h3>
+  <ul class="styled">
+    <li>El régimen de <em>inflation targeting</em> asume una curva de Phillips estable y una NAIRU conocida y estacionaria</li>
+    <li>La NAIRU puede variar endógenamente con el ciclo (histéresis del desempleo)</li>
+    <li>El sesgo anti-inflacionario puede afectar el crecimiento y el empleo en el LP</li>
+    <li>En economías abiertas con pass-through cambiario, la política de tasas no controla el componente importado de la inflación</li>
+    <li>La credibilidad del ancla nominal importa, pero no sustituye políticas de ingresos en contextos de puja distributiva intensa</li>
+  </ul>
+</div>
+</section>
+
+<!-- ══════════════ 04 ECO ABIERTA INTRO ══════════════ -->
+<section id="abierta">
+<div class="container">
+  <div class="sec-header">
+    <div class="sec-num">04</div>
+    <div class="sec-title"><h2>Economía Abierta — Conceptos Generales</h2><div class="sub">Sector externo · TC · UIP · Balanza de Pagos · Marshall-Lerner</div></div>
+  </div>
+  <div class="rule r-gold"></div>
+
+  <div class="grid-2">
+    <div class="card c-red">
+      <h4>Tipo de Cambio Nominal (E)</h4>
+      <p>Precio de la divisa en moneda doméstica. ↑E = depreciación/devaluación. Demanda: importaciones + salida de capitales. Oferta: exportaciones + entrada de capitales.</p>
+    </div>
+    <div class="card c-blue">
+      <h4>Tipo de Cambio Real (TCR)</h4>
+      <p><strong>TCR = E · P* / P</strong>. Mide competitividad relativa. ↑TCR = depreciación real → bienes domésticos más baratos para el mundo → incentivo a exportar, desincentivo a importar.</p>
+    </div>
+  </div>
+
+  <div class="formula">
+    <div class="lbl">Balanza de Pagos (identidad)</div>
+    BP:  XN(Y, Y*, e<sub>r</sub>)  +  CF[i − (i* + Ê<sup>e</sup> + d)]  ≡  ΔR<br><br>
+    XN = Exportaciones Netas (cuenta corriente simplificada)<br>
+    CF = Flujos financieros netos (cuenta de capital; función creciente del diferencial de tasa)<br>
+    ΔR = Variación de reservas internacionales del BC<br>
+    i*  = Tasa de interés internacional<br>
+    Ê<sup>e</sup> = Depreciación esperada del tipo de cambio<br>
+    d   = Prima de riesgo país
+  </div>
+
+  <h3>Paridad de Tasas de Interés (UIP)</h3>
+  <p>Con perfecta movilidad de capitales y libre arbitraje, el diferencial de tasas debe compensar la depreciación esperada más el riesgo:</p>
+
+  <div class="formula blue">
+    <div class="lbl">Condición UIP (Uncovered Interest Parity)</div>
+    i<sub>t</sub>  ≈  i*<sub>t</sub>  +  <sub>t</sub>Ê<sup>e</sup><sub>t+n</sub>  +  d<br><br>
+    Con TC fijo creíble (Ê<sup>e</sup> = 0):   i = i* + d    →   la tasa doméstica queda anclada<br>
+    Con TC flexible:   i − i* − d = Ê<sup>e</sup>    →   el TC se ajusta endógenamente
+  </div>
+
+  <div class="callout gold">
+    <strong>El "trilema" (trinidad imposible):</strong> No se pueden tener simultáneamente (1) libre movilidad de capitales, (2) tipo de cambio fijo, y (3) política monetaria autónoma. Bajo perfecta movilidad + TC fijo, la política monetaria es completamente endógena (se neutraliza).
+  </div>
+
+  <h3>Condición de Marshall-Lerner</h3>
+  <p>Para que una devaluación/depreciación <em>mejore</em> la balanza comercial (medida en dólares), se requiere que la suma de las elasticidades-precio de exportaciones e importaciones sea mayor que 1 en valor absoluto.</p>
+
+  <div class="formula">
+    <div class="lbl">Condición de Marshall-Lerner</div>
+    |ε<sub>X</sub>| + |ε<sub>M</sub>| &gt; 1<br><br>
+    Si se cumple:   ↑E (depreciación)  →  ↑XN  →  mejora balanza comercial<br>
+    Si NO se cumple:  ↑E  →  empeora o no mejora la balanza<br><br>
+    En economía pequeña (tomadora de precios): Marshall-Lerner siempre se cumple.<br>
+    En Argentina: puede cumplirse pero con elasticidades bajas (Agis y Feldman; Damill).
+  </div>
+
+  <div class="callout red">
+    <strong>Distinción clave (Damill):</strong> Que Marshall-Lerner se cumpla (mejora balanza en USD) <em>no garantiza</em> que la devaluación sea expansiva sobre la demanda agregada doméstica. Una devaluación puede mejorar la cuenta corriente y al mismo tiempo ser <strong>contractiva</strong> si el efecto redistribuivo (caída de salario real) domina sobre el efecto competitividad.
+  </div>
+
+  <h3>IS en economía abierta</h3>
+  <div class="formula blue">
+    <div class="lbl">IS abierta</div>
+    Y = A(Y, i)  +  XN(Y, Y*, e<sub>r</sub>)<br><br>
+    XN:  ∂XN/∂Y &lt; 0  (↑Y → ↑importaciones → efecto "fuga")<br>
+         ∂XN/∂e<sub>r</sub> &gt; 0  (↑TCR → ↑competitividad → ↑XN, si M-L cumple)<br><br>
+    Multiplicador &lt; economía cerrada (la "fuga" vía importaciones lo reduce).
+  </div>
+</div>
+</section>
+
+<!-- ══════════════ 05 TC FIJO ══════════════ -->
+<section id="tcfijo">
+<div class="container">
+  <div class="sec-header">
+    <div class="sec-num">05</div>
+    <div class="sec-title"><h2>IS-LM-BP: Tipo de Cambio Fijo</h2><div class="sub">Mundell-Fleming · Perfecta movilidad de capitales</div></div>
+  </div>
+  <div class="rule r-red"></div>
+
+  <p>Con TC fijo y perfecta movilidad de capitales, la UIP fija i = i* + d (dado Ê<sup>e</sup> = 0 si el TC es creíble). El BC <strong>pierde autonomía monetaria</strong>: cualquier intento de cambiar M se neutraliza automáticamente para defender el TC.</p>
+
+  <div class="formula">
+    <div class="lbl">Modelo IS-LM-BP · TC Fijo</div>
+    IS:  Y = A(Y, i) + XN(Y, Y*, e<sub>r</sub>)<br>
+    LM:  M<sup>s</sup>/P = k·Y − l·(i − i<sup>e</sup>)<br>
+    BP:  XN(Y, Y*, e<sub>r</sub>) + CF[i − (i* + Ê<sup>e</sup> + d)] − ΔR ≡ 0<br>
+    UIP: i<sub>t</sub> ≈ i*<sub>t</sub> + Ê<sup>e</sup> + d<br><br>
+    Variables endógenas: Y, i, ΔR    (E es exógena = fija)
+  </div>
+
+  <h3>Política fiscal expansiva (↑G) — TC Fijo</h3>
+  <div class="steps">
+    <div class="step"><div class="step-n">1</div><p>↑G → IS se desplaza a la derecha → tiende a ↑Y e ↑i.</p></div>
+    <div class="step"><div class="step-n">2</div><p>i > i* + d → entrada de capitales → presión a la <strong>apreciación</strong> del E.</p></div>
+    <div class="step"><div class="step-n">3</div><p>El BC <strong>compra divisas</strong> para evitar la apreciación → inyecta pesos → ↑M → LM se desplaza a la derecha.</p></div>
+    <div class="step"><div class="step-n">4</div><p>LM sigue desplazándose hasta que i = i* + d nuevamente. El BC <strong>acumula reservas</strong>.</p></div>
+    <div class="step"><div class="step-n">5</div><p><strong>Resultado final:</strong> ↑Y, i = i*, ↑Reservas, ↑C, ↑M (importaciones), ↓XN, X = igual. Política fiscal <strong>muy efectiva</strong>.</p></div>
+  </div>
+
+  <h3>Política monetaria expansiva (↑M) — TC Fijo</h3>
+  <div class="steps">
+    <div class="step"><div class="step-n blue">1</div><p>↑M → LM se desplaza a la derecha → tiende a ↓i.</p></div>
+    <div class="step"><div class="step-n blue">2</div><p>i &lt; i* + d → salida de capitales → presión a la <strong>depreciación</strong>.</p></div>
+    <div class="step"><div class="step-n blue">3</div><p>El BC <strong>vende divisas</strong> para defender el TC → retira pesos → ↓M → LM vuelve a la izquierda.</p></div>
+    <div class="step"><div class="step-n blue">4</div><p><strong>Resultado final:</strong> Y sin cambio, i = i*, M vuelve al nivel inicial, <strong>↓Reservas</strong>. Política monetaria <strong>inefectiva</strong>.</p></div>
+  </div>
+
+  <div class="callout">
+    <strong>Afirmación del parcial (1C 2025):</strong> "Una economía con TC fijo no tiene otra alternativa que atar su tasa de interés al rendimiento de los activos externos." → <strong>VERDADERO</strong> bajo perfecta movilidad de capitales. La condición UIP (i = i* + d) es consecuencia directa del arbitraje. Si el BC intenta fijar i por debajo de i*, se genera salida de capitales → pierde reservas → LM retrocede → i sube de vuelta. Si intenta i > i*, entra capital → acumula reservas → LM avanza → i baja de vuelta.
+  </div>
+
+  <h3>Devaluación (cambio de nivel del TC fijo)</h3>
+  <div class="steps">
+    <div class="step"><div class="step-n green">1</div><p>↑E (nuevo nivel fijo, creíble: Ê<sup>e</sup> = 0) → ↑TCR → ↑XN → IS se desplaza a la derecha.</p></div>
+    <div class="step"><div class="step-n green">2</div><p>i tiende a subir → entrada de capitales → BC compra divisas → ↑M → LM derecha.</p></div>
+    <div class="step"><div class="step-n green">3</div><p>Resultado: ↑Y, i = i* + d, ↑Reservas. Expansivo (si Marshall-Lerner cumple).</p></div>
+  </div>
+
+  <div class="callout red">
+    <strong>Efecto Díaz Alejandro (1963):</strong> Una devaluación puede ser <em>contractiva</em> en Argentina porque: (a) las elasticidades son bajas (M-L apenas se cumple); (b) redistribuye ingreso de asalariados (mayor propensión al consumo) a exportadores (mayor propensión al ahorro) → cae DA; (c) si hay deuda en dólares, el balance sheet se deteriora. Esto es central para economías con estructura productiva desequilibrada (Diamand).
+  </div>
+
+  <h3>Estática comparativa TC Fijo · Política Fiscal (resumen del parcial 2do C 2024)</h3>
+  <table>
+    <thead><tr><th>Variable</th><th>Resultado</th><th>Por qué</th></tr></thead>
+    <tbody>
+      <tr><td>Y (producto)</td><td>↑ Sube</td><td>Expansión fiscal + acomodación monetaria endógena</td></tr>
+      <tr><td>i (tasa doméstica)</td><td>= Sin cambio</td><td>Anclada por UIP: i = i* + d</td></tr>
+      <tr><td>C (consumo)</td><td>↑ Sube</td><td>Efecto multiplicador del mayor Y</td></tr>
+      <tr><td>Inversión I</td><td>↑ Sube</td><td>i constante + mayor Y</td></tr>
+      <tr><td>XN (exportaciones netas)</td><td>↓ Bajan</td><td>Mayor Y → ↑importaciones; E y P fijos</td></tr>
+      <tr><td>Reservas ΔR</td><td>↑ Acumulan</td><td>BC compra divisas para evitar apreciación</td></tr>
+      <tr><td>Balanza comercial</td><td>Déficit</td><td>↑Importaciones; exportaciones sin cambio</td></tr>
+    </tbody>
+  </table>
+
+  <div class="trap">
+    <div class="trap-label">⚠ Respuesta correcta del múltiple choice (1C 2025 y 2do C 2024)</div>
+    La opción correcta es <strong>(a) Déficit comercial y acumulación de reservas internacionales.</strong><br>
+    (b) es falsa: la tasa de interés no queda indeterminada, se ancla a i*.<br>
+    (c) es falsa: no hay caída de reservas sino <em>acumulación</em>. No hay deuda externa en este mecanismo.
+  </div>
+</div>
+</section>
+
+<!-- ══════════════ 06 TC FLEXIBLE ══════════════ -->
+<section id="tcflexible">
+<div class="container">
+  <div class="sec-header">
+    <div class="sec-num">06</div>
+    <div class="sec-title"><h2>IS-LM-BP: Tipo de Cambio Flexible</h2><div class="sub">Mundell-Fleming · Perfecta movilidad de capitales</div></div>
+  </div>
+  <div class="rule r-blue"></div>
+
+  <p>Con TC flexible, el BC no interviene y E se ajusta endógenamente vía UIP. La variable de ajuste es E (no ΔR). <strong>ΔR ≈ 0</strong> en el caso puro sin intervención.</p>
+
+  <div class="formula">
+    <div class="lbl">Modelo IS-LM-BP · TC Flexible</div>
+    IS:  Y = A(Y, i) + XN(Y, Y*, e<sub>r</sub>)<br>
+    LM:  M<sup>s</sup>/P = k·Y − l·(i − i<sup>e</sup>)<br>
+    BP:  XN(Y, Y*, e<sub>r</sub>) + CF[i − (i* + Ê<sup>e</sup> + d)] ≡ 0    (ΔR = 0)<br>
+    UIP: i<sub>t</sub> ≈ i*<sub>t</sub> + <sub>t</sub>Ê<sup>e</sup><sub>t+n</sub> + d<br><br>
+    Variables endógenas: Y, i, E    (M<sup>s</sup> es exógena)
+  </div>
+
+  <h3>Política fiscal expansiva (↑G) — TC Flexible</h3>
+  <div class="steps">
+    <div class="step"><div class="step-n">1</div><p>↑G → IS se desplaza a la derecha → tiende a ↑Y e ↑i.</p></div>
+    <div class="step"><div class="step-n">2</div><p>i > i* + d → entrada de capitales → presión a la <strong>apreciación</strong> (↓E). El BC no interviene.</p></div>
+    <div class="step"><div class="step-n">3</div><p>↓E → ↓TCR → ↓XN → IS se desplaza <em>de vuelta</em> a la izquierda (<em>crowding out externo</em>).</p></div>
+    <div class="step"><div class="step-n">4</div><p><strong>Resultado final:</strong> Y ≈ sin cambio (o sube muy poco), i = i* + d, ↓E, ↓XN. Política fiscal <strong>inefectiva</strong>.</p></div>
+  </div>
+
+  <h3>Política monetaria expansiva (↑M) — TC Flexible</h3>
+  <div class="steps">
+    <div class="step"><div class="step-n blue">1</div><p>↑M → LM se desplaza a la derecha → tiende a ↓i.</p></div>
+    <div class="step"><div class="step-n blue">2</div><p>i &lt; i* + d → salida de capitales → presión a la <strong>depreciación</strong> (↑E).</p></div>
+    <div class="step"><div class="step-n blue">3</div><p>↑E → ↑TCR → ↑XN → IS se desplaza a la derecha.</p></div>
+    <div class="step"><div class="step-n blue">4</div><p><strong>Resultado final:</strong> ↑Y, i = i* + d, ↑E (depreciación), ↑XN. Política monetaria <strong>muy efectiva</strong>.</p></div>
+  </div>
+
+  <h3>Política monetaria contractiva — TC Flexible (Final remanente)</h3>
+  <div class="callout red">
+    <strong>Afirmación del parcial (Final remanente):</strong> "Una política monetaria contractiva en TC flexible genera aumento de reservas." → <strong>FALSO.</strong><br><br>
+    Lo que ocurre: ↓M → LM izquierda → ↑i → i > i* + d → <strong>entrada de capitales</strong> → presión a la apreciación (↓E). Con TC flexible puro y sin intervención: el ajuste se da por la cotización; el BC <strong>no compra/vende reservas</strong>, por tanto ΔR ≈ 0. El aumento de reservas sería solo si el BC decidiera intervenir explícitamente para frenar la apreciación, pero eso sería una política adicional, no un resultado automático.
+  </div>
+
+  <h3>Cuadro comparativo TC Fijo vs. Flexible</h3>
+  <div class="regime-grid">
+    <div class="regime-cell hdr">Política</div>
+    <div class="regime-cell hdr">TC Fijo</div>
+    <div class="regime-cell hdr">TC Flexible</div>
+    <div class="regime-cell"><h5>Fiscal expansiva</h5></div>
+    <div class="regime-cell"><p>✅ Muy efectiva. ↑Y, i = i*, ↑Reservas, déficit comercial.</p></div>
+    <div class="regime-cell"><p>❌ Inefectiva. Crowding out externo: apreciación cancela el efecto.</p></div>
+    <div class="regime-cell"><h5>Monetaria expansiva</h5></div>
+    <div class="regime-cell"><p>❌ Inefectiva. M endógena. ↓Reservas, Y sin cambio.</p></div>
+    <div class="regime-cell"><p>✅ Muy efectiva. ↑Y, depreciación, ↑XN.</p></div>
+    <div class="regime-cell"><h5>Variable de ajuste</h5></div>
+    <div class="regime-cell"><p>ΔR (reservas)</p></div>
+    <div class="regime-cell"><p>E (tipo de cambio)</p></div>
+    <div class="regime-cell"><h5>Autonomía monetaria</h5></div>
+    <div class="regime-cell"><p>Nula (i anclada a i*)</p></div>
+    <div class="regime-cell"><p>Plena</p></div>
+  </div>
+</div>
+</section>
+
+<!-- ══════════════ 07 INFLACIÓN ══════════════ -->
+<section id="inflacion">
+<div class="container">
+  <div class="sec-header">
+    <div class="sec-num">07</div>
+    <div class="sec-title"><h2>Inflación y Tópicos Macroeconómicos Argentinos</h2><div class="sub">Estructuralismo · Stop-and-Go · Alta Inflación · Pass-through</div></div>
+  </div>
+  <div class="rule r-green"></div>
+
+  <p>La inflación argentina no se explica solo con la curva de Phillips estándar. El debate <strong>estructuralismo vs. monetarismo</strong> (Olivera, Fiszbein) y los desarrollos sobre <strong>alta inflación</strong> (Heymann, Frenkel R.) aportan marcos complementarios imprescindibles.</p>
+
+  <h3>Debate Estructuralismo vs. Monetarismo (Olivera, 1960–1965)</h3>
+  <div class="compare">
+    <div class="compare-col"><h4>Monetarismo</h4>
+      <ul>
+        <li>Causa: exceso de demanda global (↑M)</li>
+        <li>Opera en/cerca del pleno empleo</li>
+        <li>La oferta de dinero es <em>exógena</em></li>
+        <li>Solución: política monetaria restrictiva</li>
+        <li>Estabilidad compatible con crecimiento</li>
+        <li>Los precios relativos se ajustan sin inflación</li>
+      </ul>
+    </div>
+    <div class="compare-col"><h4>Estructuralismo</h4>
+      <ul>
+        <li>Causa: desajustes sectoriales (rigidez oferta agropecuaria)</li>
+        <li>No requiere pleno empleo</li>
+        <li>La oferta de dinero es <em>endógena</em></li>
+        <li>Solución: cambios estructurales productivos</li>
+        <li>Estabilización ortodoxa frena el crecimiento</li>
+        <li>Rigidez a la baja de precios → inflación estructural</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout">
+    <strong>¿Son incompatibles? (Pregunta V/F del parcial 1C 2025)</strong> → <strong>FALSO que son estrictamente incompatibles.</strong> Olivera señala que pueden coexistir distintos tipos de inflación dentro de la misma economía: una fase de inflación monetaria (expansión) sobre una base de inflación estructural subyacente, y en la recesión queda "al descubierto" solo la estructural. No son contradictorios, sino que apuntan a causas distintas del mismo fenómeno.
+  </div>
+
+  <h3>Ciclo Stop-and-Go y Restricción Externa (Braun y Joy; Fiszbein)</h3>
+  <p>El patrón cíclico argentino de posguerra está determinado por:</p>
+  <div class="timeline">
+    <div class="tl-item"><h4>Fase expansiva ("go")</h4>
+      <p>↑DA → ↑Y → ↑importaciones (insumos industriales) → deterioro de la balanza comercial → ↓reservas → crisis de divisas.</p></div>
+    <div class="tl-item"><h4>Devaluación + ajuste ("stop")</h4>
+      <p>↑E → ↑P de bienes exportables/importables → ↑inflación → ↓salario real (redistribución hacia exportadores) → ↓DA → recesión.</p></div>
+    <div class="tl-item"><h4>Condiciones estructurales</h4>
+      <p>Baja elasticidad oferta exportable agropecuaria + dependencia de importaciones industriales no sustituibles en el CP. Cada ciclo se repite sin resolver las causas estructurales.</p></div>
+  </div>
+
+  <h3>Impacto inflacionario de la depreciación (Frenkel, J.)</h3>
+  <div class="formula">
+    <div class="lbl">Canales del pass-through cambiario</div>
+    1. Efecto directo:      ↑E → ↑P bienes transables (importados + exportables)<br>
+    2. Efecto indirecto:    ↑P transables → ↑costos industriales → ↑P industriales<br>
+    3. Puja distributiva:  ↑P bienes-salario → negociación laboral → ↑W → ↑costos → ↑P<br><br>
+    Magnitud del pass-through depende de: poder sindical, competencia en mercado de bienes,<br>
+    indexación preexistente, nivel de la devaluación y contexto macro.
+  </div>
+
+  <h3>Régimen de Alta Inflación (Frenkel, R.; Heymann)</h3>
+  <div class="grid-2">
+    <div class="card c-red">
+      <h4>Características del régimen</h4>
+      <p>Cuando la inflación supera cierto umbral crítico, los mecanismos de formación de precios se alteran cualitativamente: acortamiento de contratos, indexación generalizada, fuga del peso, colapso de la demanda de dinero, dolarización de precios.</p>
+    </div>
+    <div class="card c-blue">
+      <h4>Inercia inflacionaria</h4>
+      <p>Las expectativas adaptativas (π<sup>e</sup> = π<sub>t-1</sub>) más la indexación generan <em>inercia</em>: la inflación pasada se proyecta al futuro. Los shocks de demanda/oferta actúan sobre una base inercial, acelerando o desacelerando.</p>
+    </div>
+  </div>
+
+  <div class="callout green">
+    <strong>Programas de estabilización:</strong> Los <em>heterodoxos</em> (Plan Austral 1985, Convertibilidad 1991) combinan ancla nominal (TC o precios-salarios) para coordinar expectativas y romper la inercia, con política fiscal/monetaria. Los <em>ortodoxos</em> solo actúan sobre M. El éxito depende del diagnóstico: si la inflación es principalmente inercial, el shock de expectativas importa tanto como la política monetaria.
+  </div>
+
+  <h3>Síntesis: fuentes de inflación en Argentina</h3>
+  <table>
+    <thead><tr><th>Fuente</th><th>Mecanismo central</th><th>Marco teórico</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Monetaria</strong></td><td>↑M → exceso DA → ↑P (sobre pleno empleo)</td><td>Monetarismo / ecuación cuantitativa</td></tr>
+      <tr><td><strong>Cambiaria</strong></td><td>↑E → pass-through a precios domésticos</td><td>Frenkel J.; Díaz Alejandro</td></tr>
+      <tr><td><strong>Estructural</strong></td><td>Rigideces sectoriales + rigidez a la baja precios</td><td>Olivera; Fiszbein; CEPAL</td></tr>
+      <tr><td><strong>Distributiva</strong></td><td>Espiral precios-salarios (puja W-P)</td><td>WS-PS; Heymann; Agis-Feldman</td></tr>
+      <tr><td><strong>Inercial</strong></td><td>Indexación + expectativas adaptativas</td><td>Phillips aumentada; Heymann</td></tr>
+      <tr><td><strong>Fiscal</strong></td><td>Déficit financiado con emisión → ↑M</td><td>Monetarismo; Frenkel R.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout gold">
+    <strong>Pregunta del parcial (1C 2024) sobre enfoque heterodoxo y ecuación cuantitativa:</strong> Si V constante y no hay emisión, un ↑P hace caer Y (MV = PY → Y = MV/P). La recomendación heterodoxa no es contener la inflación solo vía restricción monetaria, sino atacar los <em>cuellos de botella productivos</em>: diversificar la estructura económica, crédito selectivo para sectores con oferta rígida, y políticas cambiarias/fiscales que corrijan los desequilibrios sectoriales. La política monetaria sola no resuelve la inflación estructural.
+  </div>
+</div>
+</section>
+
+<!-- ══════════════ 08 PARCIALES INTERACTIVOS ══════════════ -->
+<section id="parcial">
+<div class="container">
+  <div class="sec-header">
+    <div class="sec-num">★</div>
+    <div class="sec-title"><h2>Banco de Preguntas de Parciales</h2><div class="sub">V/F con justificación · Cliqueá cada pregunta para ver la respuesta</div></div>
+  </div>
+  <div class="rule r-gold"></div>
+
+  <div class="exam-block">
+    <h3>🔷 Modelo OA-DA / WS-PS</h3>
+
+    <div class="vf-item" onclick="toggle(this)">
+      <div class="vf-header">
+        <span class="vf-badge badge-f">FALSO</span>
+        <span class="vf-question">La explicación monetarista de la inflación parte del supuesto de que las economías operan en contextos de (o cercanos al) pleno empleo y, por ello, es incompatible con la explicación estructuralista.</span>
+        <span class="vf-chevron">▼</span>
+      </div>
+      <div class="vf-body">
+        <p><strong>¿Por qué es Falso?</strong> No son estrictamente incompatibles: pueden coexistir distintos tipos de inflación en la misma economía. Olivera señala que en fases expansivas la inflación monetaria se agrega a la estructural subyacente, y en recesión queda al descubierto solo la estructural. Son teorías sobre tipos de inflación posibles, no hipótesis mutuamente excluyentes sobre la misma realidad.</p>
+      </div>
+    </div>
+
+    <div class="vf-item" onclick="toggle(this)">
+      <div class="vf-header">
+        <span class="vf-badge badge-f">FALSO</span>
+        <span class="vf-question">Según el modelo OA-DA, el dinero es neutral (no genera efectos reales) en el corto y en el largo plazo.</span>
+        <span class="vf-chevron">▼</span>
+      </div>
+      <div class="vf-body">
+        <p><strong>¿Por qué es Falso?</strong> En el CP, precios y salarios son rígidos y los agentes no anticipan perfectamente la inflación → la política monetaria expansiva puede aumentar Y y reducir u temporalmente. El dinero es neutral <em>solo</em> en el mediano/largo plazo, cuando las expectativas se ajustan (P = P<sup>e</sup>), los salarios nominales suben y el producto vuelve a Y<sub>E</sub>.</p>
+      </div>
+    </div>
+
+    <div class="vf-item" onclick="toggle(this)">
+      <div class="vf-header">
+        <span class="vf-badge badge-f">FALSO</span>
+        <span class="vf-question">De acuerdo al modelo del mercado de trabajo WS-PS, si disminuyen los salarios reales, disminuye el desempleo.</span>
+        <span class="vf-chevron">▼</span>
+      </div>
+      <div class="vf-body">
+        <p><strong>¿Por qué es Falso?</strong> La relación causal va al revés: en el modelo WS-PS, es el nivel de desempleo el que determina el salario real negociado. A mayor desempleo → menor poder de negociación → menores salarios. La causalidad en el modelo clásico (↓W/P genera ↑demanda de trabajo) no se sostiene aquí; los salarios reales surgen de la puja distributiva, no del vaciado del mercado.</p>
+      </div>
+    </div>
+
+    <div class="vf-item" onclick="toggle(this)">
+      <div class="vf-header">
+        <span class="vf-badge badge-v">VERDADERO</span>
+        <span class="vf-question">Una devaluación de la moneda en una economía con precios fijos mejora la balanza comercial si se cumple la condición de Marshall-Lerner.</span>
+        <span class="vf-chevron">▼</span>
+      </div>
+      <div class="vf-body">
+        <p><strong>¿Por qué es Verdadero?</strong> Con precios fijos (CP), ↑E → ↑TCR → bienes domésticos más baratos para el mundo → ↑X y ↓M → mejora XN. La condición Marshall-Lerner (|ε<sub>X</sub>| + |ε<sub>M</sub>| > 1) garantiza que el efecto cantidades domine sobre el efecto precio. Advertencia: en Argentina las elasticidades son bajas y el efecto puede ser pequeño en el CP (curva J).</p>
+      </div>
+    </div>
+
+    <div class="vf-item" onclick="toggle(this)">
+      <div class="vf-header">
+        <span class="vf-badge badge-f">FALSO</span>
+        <span class="vf-question">Luego de un shock de demanda en una economía que parte del nivel de producto estructural, se genera un efecto inflacionario de mediano plazo que desplaza la curva OA hacia la izquierda, explicado principalmente por la corrección de expectativas.</span>
+        <span class="vf-chevron">▼</span>
+      </div>
+      <div class="vf-body">
+        <p><strong>¿Por qué es Falso?</strong> Hay que distinguir la secuencia: si se parte de Y = Y<sub>E</sub>, el shock expansivo inicialmente mueve la economía a lo largo de DA (movimiento, no desplazamiento de OA). La OA<sub>CP</sub> se desplaza hacia la <em>izquierda</em> (o arriba) recién en el mediano plazo cuando los agentes ajustan P<sup>e</sup> al alza. Decir que es el efecto principal "de mediano plazo" no está del todo mal, pero la afirmación omite que en el CP el movimiento es sobre OA (no desplazamiento), y el desplazamiento posterior viene de la corrección de expectativas.</p>
+      </div>
+    </div>
+
+    <div class="vf-item" onclick="toggle(this)">
+      <div class="vf-header">
+        <span class="vf-badge badge-v">VERDADERO</span>
+        <span class="vf-question">La Curva de Phillips original es una relación negativa entre la tasa de desempleo y la tasa de inflación. Dicha relación se rompe en los años setenta en los cuales predominaron períodos con elevada inflación y elevado desempleo.</span>
+        <span class="vf-chevron">▼</span>
+      </div>
+      <div class="vf-body">
+        <p><strong>¿Por qué es Verdadero?</strong> Phillips (1958) documentó empíricamente la relación inversa. Los shocks petroleros de 1973 y 1979 generaron simultáneamente inflación (shocks de oferta que desplazan OA<sub>CP</sub> hacia arriba) y recesión (↓Y, ↑u) → estanflación. Esto invalida el trade-off estable. Friedman y Phelps ya habían advertido en 1968 que la relación era solo de CP y que en el LP la curva sería vertical.</p>
+      </div>
+    </div>
+
+    <div class="vf-item" onclick="toggle(this)">
+      <div class="vf-header">
+        <span class="vf-badge badge-f">FALSO</span>
+        <span class="vf-question">[2do C 2024 — OA-DA] En el corto plazo, aumentan los salarios nominales y los precios, permaneciendo constantes los salarios reales.</span>
+        <span class="vf-chevron">▼</span>
+      </div>
+      <div class="vf-body">
+        <p><strong>¿Por qué es Falso?</strong> En el CP, los salarios nominales suben primero (por mayor poder de negociación al bajar u). Los precios aún no se ajustaron → el salario <em>real</em> también sube transitoriamente. El mark-up cae. Es después, cuando los empresarios ajustan precios para recuperar el margen, que el salario real cae de vuelta. La opción (a) correcta era esta: en el CP hay un aumento de W/P junto con una suba de P.</p>
+      </div>
+    </div>
+
+    <div class="vf-item" onclick="toggle(this)">
+      <div class="vf-header">
+        <span class="vf-badge badge-f">FALSO</span>
+        <span class="vf-question">[2do C 2024 — OA-DA] En el nuevo equilibrio de mediano plazo, aumentaron los salarios reales respecto a su nivel original.</span>
+        <span class="vf-chevron">▼</span>
+      </div>
+      <div class="vf-body">
+        <p><strong>¿Por qué es Falso?</strong> En el equilibrio de mediano plazo, W/P vuelve a 1/(1+μ), exactamente igual al nivel original. La política de demanda no puede elevar estructuralmente el salario real: en el MP el ajuste de expectativas y precios neutraliza el efecto. Lo que cambia permanentemente es el nivel de P (más alto), no el salario real.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="exam-block">
+    <h3>🔷 Economía Abierta / IS-LM-BP</h3>
+
+    <div class="vf-item" onclick="toggle(this)">
+      <div class="vf-header">
+        <span class="vf-badge badge-v">VERDADERO</span>
+        <span class="vf-question">[1C 2025] En una economía con régimen de TC fijo, no tiene otra alternativa que atar su tasa de interés al rendimiento de los activos externos.</span>
+        <span class="vf-chevron">▼</span>
+      </div>
+      <div class="vf-body">
+        <p><strong>¿Por qué es Verdadero?</strong> Bajo TC fijo y perfecta movilidad de capitales, la condición UIP (i = i* + d, dado Ê<sup>e</sup> = 0) ata la tasa doméstica a la internacional. Si el BC intenta i &lt; i*, provoca salida de capitales → pierde reservas → ↓M → i sube hasta i*. Si intenta i > i*, entra capital → acumula reservas → ↑M → i baja hasta i*. En ambos casos, la política monetaria queda subordinada al tipo de cambio.</p>
+      </div>
+    </div>
+
+    <div class="vf-item" onclick="toggle(this)">
+      <div class="vf-header">
+        <span class="vf-badge badge-v">VERDADERO (opción a)</span>
+        <span class="vf-question">[1C 2025 y 2do C 2024 — múltiple choice] Con IS-LM-BP, TC fijo, inflexibilidad de precios, y política fiscal expansiva: el nuevo equilibrio se caracteriza por déficit comercial y acumulación de reservas internacionales.</span>
+        <span class="vf-chevron">▼</span>
+      </div>
+      <div class="vf-body">
+        <p><strong>Mecanismo completo:</strong> ↑G → IS→ → ↑Y, i tiende a subir → i > i* + d → entrada de capitales → BC compra divisas → acumula reservas → ↑M → LM→ hasta i = i*. El mayor Y → ↑importaciones → ↓XN → <strong>déficit comercial</strong>. Simultáneamente: cuenta de capital positiva (entrada de capitales) + déficit corriente → ΔR > 0 (acumulación).<br><br>
+        (b) es falsa: i queda anclada a i*, no indeterminada.<br>
+        (c) es falsa: no hay caída de reservas ni aumento de deuda externa en este mecanismo.</p>
+      </div>
+    </div>
+
+    <div class="vf-item" onclick="toggle(this)">
+      <div class="vf-header">
+        <span class="vf-badge badge-f">FALSO</span>
+        <span class="vf-question">[Final remanente] En una economía con TC flexible y perfecta movilidad de capitales, una política monetaria contractiva genera una suba de la tasa de interés local, caída del tipo de cambio nominal y aumento de reservas internacionales.</span>
+        <span class="vf-chevron">▼</span>
+      </div>
+      <div class="vf-body">
+        <p><strong>¿Por qué es Falso?</strong> Secuencia correcta: ↓M → LM← → ↑i → i > i* + d → <strong>entrada de capitales</strong> → presión a la apreciación → <strong>↓E</strong> (moneda se aprecia). ↓TCR → ↓XN → IS← → ↑u, ↓Y. Reservas: bajo TC flexible puro, el BC no interviene → ΔR ≈ 0. La apreciación no se combate automáticamente; se da por la cotización de mercado. El error está en "aumento de reservas": eso ocurriría si el BC interviniera activamente comprando divisas, pero eso es una decisión de política explícita, no el resultado automático.</p>
+      </div>
+    </div>
+
+    <div class="vf-item" onclick="toggle(this)">
+      <div class="vf-header">
+        <span class="vf-badge badge-f">FALSO</span>
+        <span class="vf-question">[Final remanente — Eco. cerrada, MP] En una economía cerrada con mediano plazo y curvas OA-DA con pendientes "normales": si el gobierno decide incrementar las transferencias al sector privado, se genera un proceso inflacionario que contrarresta (elimina) en el corto plazo cualquier efecto en el empleo y los salarios reales que dicha política pudiera generar.</span>
+        <span class="vf-chevron">▼</span>
+      </div>
+      <div class="vf-body">
+        <p><strong>¿Por qué es Falso?</strong> En el <em>corto</em> plazo, la política expansiva sí genera efectos reales: ↑Y, ↓u, ↑W/P transitoriamente. El proceso inflacionario y el ajuste de expectativas que contrarrestan estos efectos ocurren en el <em>mediano</em> plazo (no en el CP). En el CP, la OA<sub>CP</sub> aún no se desplazó; lo hace gradualmente a medida que los agentes corrigen P<sup>e</sup>.</p>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<footer>
+  Resumen generado a partir del material de cátedra y parciales anteriores · Macroeconomía I · Lic. en Economía UBA · Cátedra Damill · 2025
+</footer>
+
+<script>
+  function toggle(el) { el.classList.toggle('open'); }
+  const sections = document.querySelectorAll('section');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.05 });
+  sections.forEach(s => obs.observe(s));
+</script>
+</body>
+</html>
